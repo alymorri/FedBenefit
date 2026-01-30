@@ -288,16 +288,16 @@ export function EligibilityAuditTool() {
         <ProgressBar progress={progress} />
       </div>
 
-      <Card className="border-t-4 border-t-red-600 shadow-md mt-2 overflow-hidden">
+      <Card className="border-t-4 border-t-primary shadow-lg mt-2 overflow-hidden">
         <CardContent className="p-0">
           {currentStep === "rebate-check" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col">
-                  <span>Tariff Rebate Credits AUDIT</span>
-                  <span>Verify Your $2,000 Subsidy Status</span>
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>FedBenefit Eligibility Verification</span>
+                  <span className="text-base text-muted-foreground font-normal">Verify Your $2,000 Subsidy Status</span>
                 </h2>
-                <BadgeCheck className="h-5 w-5 text-red-600" />
+                <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 sm:p-4 mb-2 sm:mb-4">
@@ -352,20 +352,20 @@ export function EligibilityAuditTool() {
           {currentStep === "grocery-card-offer" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col">
-                  <span>GROCERY ASSISTANCE</span>
-                  <span>BENEFIT ELIGIBILITY CHECK</span>
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>FedBenefit Grocery Assistance</span>
+                  <span className="text-base text-muted-foreground font-normal">Additional Benefit Eligibility Check</span>
                 </h2>
-                <BadgeCheck className="h-5 w-5 text-red-600" />
+                <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
-              <div className="bg-blue-50 border-l-4 border-blue-500 p-3 sm:p-4 mb-2 sm:mb-4">
+              <div className="bg-blue-50 border-l-4 border-primary p-3 sm:p-4 mb-2 sm:mb-4">
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <ShoppingCart className="h-5 w-5 text-blue-500" />
+                    <ShoppingCart className="h-5 w-5 text-primary" />
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm text-blue-700">
+                    <p className="text-sm text-foreground">
                       <span className="font-bold">NEW BENEFIT AVAILABLE:</span>{" "}
                       You may qualify for a Pre-Paid $500 Card for groceries.
                     </p>
@@ -374,13 +374,13 @@ export function EligibilityAuditTool() {
               </div>
 
               <div className="space-y-3 sm:space-y-4">
-                <h3 className="text-base sm:text-lg font-medium">
+                <h3 className="text-base sm:text-lg font-medium text-foreground">
                   Would you like to receive a Pre-Paid $500 Card for Groceries?
                 </h3>
 
                 <div className="space-y-2">
                   <Button
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold h-12 text-base"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold h-12 text-base"
                     onClick={handleGroceryCardOffer}
                   >
                     Check Now for $500 Card
@@ -393,11 +393,11 @@ export function EligibilityAuditTool() {
           {currentStep === "checking-records" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col">
-                  <span>FEDERAL RECOVERY AUDIT</span>
-                  <span>Verify Your $2,000 Tariff Rebate Credits</span>
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>FedBenefit Verification System</span>
+                  <span className="text-base text-muted-foreground font-normal">Checking Federal Records</span>
                 </h2>
-                <BadgeCheck className="h-5 w-5 text-red-600" />
+                <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="flex flex-col items-center justify-center py-4 sm:py-6">
@@ -425,11 +425,11 @@ export function EligibilityAuditTool() {
           {currentStep === "location" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col">
-                  <span>FEDERAL RECOVERY AUDIT</span>
-                  <span>$2,000 Tariff Rebate Credits</span>
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>FedBenefit Location Verification</span>
+                  <span className="text-base text-muted-foreground font-normal">$2,000 Federal Subsidy Program</span>
                 </h2>
-                <BadgeCheck className="h-5 w-5 text-red-600" />
+                <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="bg-red-50 border-l-4 border-red-500 p-3 sm:p-4 mb-2 sm:mb-4">
@@ -500,7 +500,7 @@ export function EligibilityAuditTool() {
 
                   <Button
                     type="submit"
-                    className="w-full bg-red-600 hover:bg-red-700 text-white"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                     disabled={answers.zipCode.length !== 5}
                   >
                     Continue to Check Eligibility
@@ -513,20 +513,20 @@ export function EligibilityAuditTool() {
           {currentStep === "age" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col">
-                  <span>FEDERAL RECOVERY AUDIT</span>
-                  <span>$2,000 Tariff Rebate Credits</span>
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>FedBenefit Age Verification</span>
+                  <span className="text-base text-muted-foreground font-normal">$2,000 Federal Subsidy Program</span>
                 </h2>
-                <BadgeCheck className="h-5 w-5 text-red-600" />
+                <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
-              <div className="bg-blue-50 border-l-4 border-blue-500 p-3 sm:p-4 mb-2 sm:mb-4">
+              <div className="bg-blue-50 border-l-4 border-primary p-3 sm:p-4 mb-2 sm:mb-4">
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <DollarSign className="h-5 w-5 text-blue-500" />
+                    <DollarSign className="h-5 w-5 text-primary" />
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm text-blue-700">
+                    <p className="text-sm text-foreground">
                       Your ZIP code shows you're in an eligible region for the
                       $2,000 payment.
                     </p>
@@ -587,11 +587,11 @@ export function EligibilityAuditTool() {
           {currentStep === "checking-age" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col">
-                  <span>FEDERAL RECOVERY AUDIT</span>
-                  <span>$2,000 Tariff Rebate Credits</span>
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>FedBenefit Verification</span>
+                  <span className="text-base text-muted-foreground font-normal">Processing Age Verification</span>
                 </h2>
-                <BadgeCheck className="h-5 w-5 text-red-600" />
+                <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="flex flex-col items-center justify-center py-4 sm:py-8">
@@ -603,11 +603,11 @@ export function EligibilityAuditTool() {
           {currentStep === "income" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col">
-                  <span>FEDERAL RECOVERY AUDIT</span>
-                  <span>$2,000 Tariff Rebate Credits</span>
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>FedBenefit Income Verification</span>
+                  <span className="text-base text-muted-foreground font-normal">$2,000 Federal Subsidy Program</span>
                 </h2>
-                <BadgeCheck className="h-5 w-5 text-red-600" />
+                <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="bg-green-50 border-l-4 border-green-500 p-3 sm:p-4 mb-2 sm:mb-4">
@@ -676,11 +676,11 @@ export function EligibilityAuditTool() {
           {currentStep === "checking-income" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col">
-                  <span>Tariff RECOVERY AUDIT</span>
-                  <span>$2,000 Tariff Rebate Credits</span>
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>FedBenefit Verification</span>
+                  <span className="text-base text-muted-foreground font-normal">Processing Income Verification</span>
                 </h2>
-                <BadgeCheck className="h-5 w-5 text-red-600" />
+                <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="flex flex-col items-center justify-center py-4 sm:py-8">
@@ -692,11 +692,11 @@ export function EligibilityAuditTool() {
           {currentStep === "assistance" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col">
-                  <span>Tariff RECOVERY AUDIT</span>
-                  <span>$2,000 Tariff Rebate Credits</span>
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>FedBenefit Program Check</span>
+                  <span className="text-base text-muted-foreground font-normal">$2,000 Federal Subsidy Program</span>
                 </h2>
-                <BadgeCheck className="h-5 w-5 text-red-600" />
+                <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="bg-green-50 border-l-4 border-green-500 p-3 sm:p-4 mb-2 sm:mb-4">
@@ -725,7 +725,7 @@ export function EligibilityAuditTool() {
                     className={cn(
                       "w-full justify-start h-12 text-base font-normal",
                       answers.assistancePrograms.includes("Medicaid") &&
-                      "border-red-600 bg-red-50"
+                      "border-primary bg-blue-50 text-foreground"
                     )}
                     onClick={() => handleAssistanceSelect("Medicaid")}
                   >
@@ -737,7 +737,7 @@ export function EligibilityAuditTool() {
                     className={cn(
                       "w-full justify-start h-12 text-base font-normal",
                       answers.assistancePrograms.includes("Medicare") &&
-                      "border-red-600 bg-red-50"
+                      "border-primary bg-blue-50 text-foreground"
                     )}
                     onClick={() => handleAssistanceSelect("Medicare")}
                   >
@@ -749,7 +749,7 @@ export function EligibilityAuditTool() {
                     className={cn(
                       "w-full justify-start h-12 text-base font-normal",
                       answers.assistancePrograms.includes("SNAP / EBT") &&
-                      "border-red-600 bg-red-50"
+                      "border-primary bg-blue-50 text-foreground"
                     )}
                     onClick={() => handleAssistanceSelect("SNAP / EBT")}
                   >
@@ -762,7 +762,7 @@ export function EligibilityAuditTool() {
                       "w-full justify-start h-12 text-base font-normal",
                       answers.assistancePrograms.includes(
                         "None of the above"
-                      ) && "border-red-600 bg-red-50"
+                      ) && "border-primary bg-blue-50 text-foreground"
                     )}
                     onClick={() => handleAssistanceSelect("None of the above")}
                   >
@@ -787,7 +787,7 @@ export function EligibilityAuditTool() {
                 </div>
 
                 <Button
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold transition-all duration-300 shadow-[0_0_10px_rgba(239,68,68,0.5)] hover:shadow-[0_0_15px_rgba(239,68,68,0.7)]"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                   onClick={handleAssistanceSubmit}
                 >
                   Complete Eligibility Check Now
@@ -799,11 +799,11 @@ export function EligibilityAuditTool() {
           {currentStep === "assistance-alt" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col">
-                  <span>GROCERY ASSISTANCE</span>
-                  <span>BENEFIT ELIGIBILITY CHECK</span>
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>FedBenefit Grocery Assistance</span>
+                  <span className="text-base text-muted-foreground font-normal">Additional Program Verification</span>
                 </h2>
-                <BadgeCheck className="h-5 w-5 text-red-600" />
+                <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="bg-green-50 border-l-4 border-green-500 p-3 sm:p-4 mb-2 sm:mb-4">
@@ -904,11 +904,11 @@ export function EligibilityAuditTool() {
           {currentStep === "checking-assistance" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col">
-                  <span>Tariff RECOVERY AUDIT</span>
-                  <span>$2,000 Tariff Rebate Credits</span>
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>FedBenefit Final Verification</span>
+                  <span className="text-base text-muted-foreground font-normal">Confirming Eligibility Status</span>
                 </h2>
-                <BadgeCheck className="h-5 w-5 text-red-600" />
+                <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="flex flex-col items-center justify-center py-4 sm:py-8">
@@ -920,10 +920,10 @@ export function EligibilityAuditTool() {
           {currentStep === "results" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold">
-                  Subsidy Guide Audit Report
+                <h2 className="text-lg sm:text-xl font-bold text-foreground">
+                  FedBenefit Eligibility Report
                 </h2>
-                <FileCheck className="h-5 w-5 text-red-600" />
+                <FileCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="flex flex-col items-center justify-center py-3 sm:py-4">
@@ -991,10 +991,10 @@ export function EligibilityAuditTool() {
           {currentStep === "results-grocery" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold">
-                  BENEFITS ELIGIBILITY REPORT
+                <h2 className="text-lg sm:text-xl font-bold text-foreground">
+                  FedBenefit Eligibility Report
                 </h2>
-                <FileCheck className="h-5 w-5 text-red-600" />
+                <FileCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="flex flex-col items-center justify-center py-3 sm:py-4">
@@ -1077,10 +1077,10 @@ export function EligibilityAuditTool() {
           {currentStep === "results-agent" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold">
-                  BENEFITS ELIGIBILITY REPORT
+                <h2 className="text-lg sm:text-xl font-bold text-foreground">
+                  FedBenefit Eligibility Report
                 </h2>
-                <FileCheck className="h-5 w-5 text-red-600" />
+                <FileCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="flex flex-col items-center justify-center py-3 sm:py-4">
