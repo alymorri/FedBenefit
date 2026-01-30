@@ -70,8 +70,6 @@ export function EligibilityAuditTool() {
     rebateClaimed: "",
     zipCode: "",
     state: "",
-    ageRange: "",
-    income: "",
     assistancePrograms: ["None of the above"],
     flowPath: "standard", // "standard", "grocery"
   });
@@ -90,7 +88,6 @@ export function EligibilityAuditTool() {
   // Determine which results page to show based on user selections
   const shouldShowGroceryPath = () => {
     return (
-      answers.ageRange === "65+" ||
       answers.assistancePrograms.includes("Medicaid") ||
       answers.assistancePrograms.includes("Medicare")
     );
@@ -126,13 +123,9 @@ export function EligibilityAuditTool() {
       "rebate-check": 0,
       "checking-records": 20,
       "grocery-card-offer": 20,
-      location: 20,
-      age: 40,
-      "checking-age": 60,
-      income: 60,
-      "checking-income": 80,
-      assistance: 80,
-      "assistance-alt": 80,
+      location: 40,
+      assistance: 60,
+      "assistance-alt": 60,
       "checking-assistance": 100,
       results: 100,
       "results-grocery": 100,
@@ -189,31 +182,11 @@ export function EligibilityAuditTool() {
   const handleZipSubmit = (e) => {
     e.preventDefault();
     if (answers.zipCode.length === 5) {
-      setCurrentStep("age");
+      setCurrentStep("assistance");
     }
   };
 
-  // Handle age selection
-  const handleAgeSelect = (age) => {
-    setAnswers({ ...answers, ageRange: age });
-    setCurrentStep("checking-age");
 
-    // Simulate checking and move to next step
-    setTimeout(() => {
-      setCurrentStep("income");
-    }, 1500);
-  };
-
-  // Handle income selection
-  const handleIncomeSelect = (income) => {
-    setAnswers({ ...answers, income: income });
-    setCurrentStep("checking-income");
-
-    // Simulate checking and move to next step
-    setTimeout(() => {
-      setCurrentStep("assistance");
-    }, 1500);
-  };
 
   // Handle assistance program selection
   const handleAssistanceSelect = (program) => {
@@ -510,184 +483,9 @@ export function EligibilityAuditTool() {
             </div>
           )}
 
-          {currentStep === "age" && (
-            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
-                  <span>FedBenefit Age Verification</span>
-                  <span className="text-base text-muted-foreground font-normal">$2,000 Federal Subsidy Program</span>
-                </h2>
-                <BadgeCheck className="h-6 w-6 text-primary" />
-              </div>
 
-              <div className="bg-blue-50 border-l-4 border-primary p-3 sm:p-4 mb-2 sm:mb-4">
-                <div className="flex">
-                  <div className="flex-shrink-0">
-                    <DollarSign className="h-5 w-5 text-primary" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm text-foreground">
-                      Your ZIP code shows you're in an eligible region for the
-                      $2,000 payment.
-                    </p>
-                  </div>
-                </div>
-              </div>
 
-              <div className="space-y-3 sm:space-y-4">
-                <h3 className="text-base sm:text-lg font-medium">
-                  What's your age range?
-                </h3>
 
-                <div className="space-y-2">
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start h-12 text-base font-normal"
-                    onClick={() => handleAgeSelect("18-24")}
-                  >
-                    18–24
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start h-12 text-base font-normal"
-                    onClick={() => handleAgeSelect("25-34")}
-                  >
-                    25–34
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start h-12 text-base font-normal"
-                    onClick={() => handleAgeSelect("35-49")}
-                  >
-                    35–49
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start h-12 text-base font-normal"
-                    onClick={() => handleAgeSelect("50-64")}
-                  >
-                    50–64
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start h-12 text-base font-normal"
-                    onClick={() => handleAgeSelect("65+")}
-                  >
-                    65+
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {currentStep === "checking-age" && (
-            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
-                  <span>FedBenefit Verification</span>
-                  <span className="text-base text-muted-foreground font-normal">Processing Age Verification</span>
-                </h2>
-                <BadgeCheck className="h-6 w-6 text-primary" />
-              </div>
-
-              <div className="flex flex-col items-center justify-center py-4 sm:py-8">
-                <CheckingAnimation text="Verifying age-based payment eligibility..." />
-              </div>
-            </div>
-          )}
-
-          {currentStep === "income" && (
-            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
-                  <span>FedBenefit Income Verification</span>
-                  <span className="text-base text-muted-foreground font-normal">$2,000 Federal Subsidy Program</span>
-                </h2>
-                <BadgeCheck className="h-6 w-6 text-primary" />
-              </div>
-
-              <div className="bg-green-50 border-l-4 border-green-500 p-3 sm:p-4 mb-2 sm:mb-4">
-                <div className="flex">
-                  <div className="flex-shrink-0">
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm text-green-700">
-                      Your age group qualifies for the full $2,000 payment.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-3 sm:space-y-4">
-                <h3 className="text-base sm:text-lg font-medium">
-                  What was your total income in 2024?
-                </h3>
-
-                <div className="space-y-2">
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start h-12 text-base font-normal"
-                    onClick={() => handleIncomeSelect("Under $20,000")}
-                  >
-                    Under $20,000
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start h-12 text-base font-normal"
-                    onClick={() => handleIncomeSelect("$20,001 - $40,000")}
-                  >
-                    $20,001 – $40,000
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start h-12 text-base font-normal"
-                    onClick={() => handleIncomeSelect("$40,001 - $60,000")}
-                  >
-                    $40,001 – $60,000
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start h-12 text-base font-normal"
-                    onClick={() => handleIncomeSelect("$60,001 - $80,000")}
-                  >
-                    $60,001 – $80,000
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start h-12 text-base font-normal"
-                    onClick={() => handleIncomeSelect("Over $80,000")}
-                  >
-                    Over $80,000
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {currentStep === "checking-income" && (
-            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
-                  <span>FedBenefit Verification</span>
-                  <span className="text-base text-muted-foreground font-normal">Processing Income Verification</span>
-                </h2>
-                <BadgeCheck className="h-6 w-6 text-primary" />
-              </div>
-
-              <div className="flex flex-col items-center justify-center py-4 sm:py-8">
-                <CheckingAnimation text="Calculating payment eligibility based on income..." />
-              </div>
-            </div>
-          )}
 
           {currentStep === "assistance" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
@@ -706,7 +504,7 @@ export function EligibilityAuditTool() {
                   </div>
                   <div className="ml-3">
                     <p className="text-sm text-green-700 font-bold">
-                      Your income may qualify you for the full $2,000 recovery
+                      Your location qualifies you for the $2,000 recovery
                       credit!
                     </p>
                   </div>
