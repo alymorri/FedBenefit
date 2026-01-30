@@ -68,19 +68,19 @@ function App() {
           {/* Main branding header */}
           <div className="w-full bg-white border-b border-border">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
-                <div className="flex items-center gap-2.5 sm:gap-3">
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-2.5 sm:gap-3 flex-shrink min-w-0">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 bg-primary rounded-sm flex items-center justify-center shadow-sm flex-shrink-0">
                     <span className="text-white font-bold text-lg sm:text-xl">FB</span>
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h1 className="text-2xl sm:text-4xl font-bold text-primary leading-none mb-0.5 sm:mb-1">FedBenefit</h1>
                     <p className="text-xs sm:text-sm text-muted-foreground">Independent Policy Analysis</p>
                   </div>
                 </div>
-                <div className="text-left sm:text-right">
-                  <p className="text-sm sm:text-base font-semibold text-destructive leading-tight">
-                    Deadline: {getDeadline()}
+                <div className="text-right flex-shrink-0">
+                  <p className="text-xs sm:text-base font-semibold text-destructive leading-tight whitespace-nowrap">
+                    <span className="block sm:inline">Deadline:</span> <span className="block sm:inline">{getDeadline()}</span>
                   </p>
                 </div>
               </div>
