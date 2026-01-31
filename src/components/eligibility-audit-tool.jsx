@@ -809,99 +809,113 @@ export function EligibilityAuditTool() {
           )}
 
           {currentStep === "results" && (
-            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-bold text-foreground">
-                  FedBenefit Eligibility Report
-                </h2>
-                <FileCheck className="h-6 w-6 text-primary" />
+            <div className="p-6 space-y-6">
+              {/* Header with Approved Badge and Correspondent Info */}
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="bg-green-600 text-white px-3 py-1 rounded font-bold text-sm">
+                    APPROVED
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    <span>IRS • Tax Credits</span>
+                  </div>
+                </div>
+                <div className="text-right text-xs text-muted-foreground">
+                  <div className="font-semibold text-foreground">Sarah Mitchell</div>
+                  <div>Tax Policy Correspondent</div>
+                  <div>{new Date().toLocaleDateString()}</div>
+                </div>
               </div>
 
-              <div className="space-y-3 sm:space-y-4">
-                <div className="bg-green-50 border-2 border-green-500 p-3 sm:p-4 rounded-lg">
-                  <div className="flex items-center mb-2">
-                    <CheckCircle className="h-6 w-6 text-green-600 mr-2" />
-                    <h3 className="text-lg sm:text-xl font-bold text-green-800">
-                      CONGRATULATIONS!
-                    </h3>
+              {/* Main Title */}
+              <div>
+                <h2 className="text-2xl font-bold text-foreground mb-1">
+                  Federal Subsidy Audit Report
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Your eligibility has been confirmed
+                </p>
+              </div>
+
+              {/* Centered Eligibility Box */}
+              <div className="flex justify-center py-4">
+                <div className="bg-green-50 border-2 border-green-500 rounded-xl p-6 text-center max-w-sm">
+                  <p className="text-green-700 font-medium mb-2">
+                    You were found eligible for
+                  </p>
+                  <div className="text-5xl font-bold text-green-600 mb-1">
+                    $ 2,007.32
                   </div>
-                  <p className="text-sm sm:text-base text-green-800 font-medium">
-                    Based on your responses, you are APPROVED to claim your
-                    $3,000 Federal Subsidy Credits.
+                  <p className="text-green-700 text-sm">
+                    Federal Subsidy Credit
                   </p>
                 </div>
+              </div>
 
-                <div className="border-2 border-gray-300 rounded-lg p-3 sm:p-4 space-y-2">
-                  <div className="flex justify-between py-1 border-b border-gray-200">
-                    <span className="text-sm text-gray-600">Case ID:</span>
-                    <span className="text-sm font-mono font-semibold">
-                      {caseId}
-                    </span>
-                  </div>
+              {/* Call to Action Text */}
+              <div className="text-center">
+                <p className="text-lg font-bold text-green-600">
+                  You must call now to finalize.
+                </p>
+              </div>
 
-                  <div className="flex justify-between py-1 border-b border-gray-200">
-                    <span className="text-sm text-gray-600">Location:</span>
-                    <span className="text-sm font-semibold">
-                      {answers.state || "Eligible State"}
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between py-1 border-b border-gray-200">
-                    <span className="text-sm text-gray-600">Status:</span>
-                    <span className="text-sm font-semibold text-green-600">
-                      APPROVED
-                    </span>
-                  </div>
-
-                  <div className="flex justify-between py-2 bg-blue-50 -mx-4 px-4 rounded">
-                    <span className="text-sm font-medium">Amount:</span>
-                    <span className="text-xl font-bold text-green-600">
-                      $3,000.00
-                    </span>
+              {/* Approved Items */}
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4 space-y-3">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
+                  <div className="text-sm">
+                    <span className="font-bold text-foreground">APPROVED:</span>{" "}
+                    <span className="text-foreground">$2000 Federal Subsidy Credit</span>
                   </div>
                 </div>
-
-                <div className="bg-red-50 border-l-4 border-red-500 p-3 sm:p-4">
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <Clock className="h-5 w-5 text-red-500" />
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-sm text-red-700 font-bold">
-                        URGENT: You must claim your payment before{" "}
-                        <CountdownTimer expiryDate={expiryDate} />
-                      </p>
-                    </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
+                  <div className="text-sm">
+                    <span className="font-bold text-foreground">APPROVED:</span>{" "}
+                    <span className="text-foreground">Benefits Support Package</span>
                   </div>
                 </div>
+              </div>
 
-                <div className="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-lg text-center">
-                  <MoneyAnimation />
-                  <h3 className="text-white text-xl sm:text-2xl font-bold mb-2">
-                    Claim Your $3,000 Now
-                  </h3>
-                  <p className="text-white text-sm mb-4">
-                    Speak with a verified specialist to complete your claim
-                  </p>
+              {/* Connect Button */}
+              <div>
+                <a
+                  href="tel:18663988047"
+                  className="inline-block w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg text-center transition-colors"
+                >
+                  Connect to Agent Now
+                </a>
+              </div>
 
-                  <a
-                    href="tel:18663988047"
-                    className="inline-block w-full bg-white text-green-600 font-bold py-4 px-6 rounded-lg text-lg hover:bg-gray-100 transition-colors"
-                  >
-                    📞 Call Now: 1-866-398-8047
-                  </a>
+              {/* Description */}
+              <p className="text-sm text-muted-foreground text-center">
+                You'll speak with a certified Benefits Agent to confirm your identity and receive your benefits support package and $2000 Credits.
+              </p>
 
-                  <p className="text-white text-xs mt-3">
-                    Available 7 Days a Week • FREE Consultation
-                  </p>
+              {/* Case ID and Countdown */}
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 space-y-3">
+                <div className="flex items-start gap-2">
+                  <div className="text-sm">
+                    <span className="font-bold text-foreground">Case ID:</span>{" "}
+                    <span className="font-mono text-foreground">{caseId}</span>
+                  </div>
                 </div>
-
-                <div className="text-center text-sm text-gray-500">
-                  <p>
-                    Reference your Case ID ({caseId}) when calling to expedite
-                    processing.
-                  </p>
+                <div className="flex items-start gap-2">
+                  <Clock className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <div className="text-sm text-red-600 font-bold">
+                    Agent Available Now:
+                  </div>
                 </div>
+                <CountdownTimer expiryDate={expiryDate} />
+              </div>
+
+              {/* Card Image */}
+              <div className="flex justify-center pt-4">
+                <img 
+                  src="/recovery-card.jpg" 
+                  alt="Recovery Act Credit Card" 
+                  className="max-w-full h-auto rounded-lg shadow-lg"
+                />
               </div>
             </div>
           )}
