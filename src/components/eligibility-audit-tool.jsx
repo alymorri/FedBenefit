@@ -267,7 +267,7 @@ export function EligibilityAuditTool() {
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
-                  <span>FedBenefit Eligibility Verification</span>
+                  <span>IRS Federal Subsidy Credit Verification Survey</span>
                   <span className="text-base text-muted-foreground font-normal">Verify Your $2,000 Subsidy Status</span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
