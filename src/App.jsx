@@ -7,6 +7,7 @@ function App() {
     state: "D.C.",
     loading: true,
   });
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
     // Fetch user location based on IP
@@ -15,7 +16,7 @@ function App() {
       .then((data) => {
         setLocationInfo({
           city: data.city || "Washington",
-          state: data.region_code || "D.C.",
+          state: data.region || data.region_code || "D.C.",
           loading: false,
         });
       })
@@ -28,10 +29,18 @@ function App() {
       });
   }, []);
 
+  // Update time every minute
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000); // Update every minute
+
+    return () => clearInterval(timer);
+  }, []);
+
   const formatDate = () => {
-    const now = new Date();
     const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
-    return now.toLocaleDateString("en-US", options);
+    return currentTime.toLocaleDateString("en-US", options);
   };
 
   const getDeadline = () => {
