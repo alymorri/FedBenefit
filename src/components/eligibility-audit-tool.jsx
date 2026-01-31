@@ -282,7 +282,7 @@ export function EligibilityAuditTool() {
                     <p className="text-sm text-yellow-700">
                       <span className="font-bold">URGENT:</span> The IRS
                       estimates 5.5 million Americans still haven't claimed
-                      their $3,000 Tariff Rebate Credits.
+                      their $3,000 Federal Subsidy Credits.
                     </p>
                   </div>
                 </div>
@@ -290,7 +290,7 @@ export function EligibilityAuditTool() {
 
               <div className="space-y-3 sm:space-y-4">
                 <h3 className="text-base sm:text-lg font-medium">
-                  Have you already claimed your $3,000 Tariff Rebate Credits?
+                  Have you already claimed your $3,000 Federal Subsidy Credits?
                 </h3>
 
                 <div className="space-y-2">
@@ -735,7 +735,7 @@ export function EligibilityAuditTool() {
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
                   <p className="text-sm sm:text-base">
-                    <span className="font-bold">APPROVED:</span> $3,000 Tariff Rebate Credits
+                    <span className="font-bold">APPROVED:</span> $3,000 Federal Subsidy Credits
                   </p>
                 </div>
 
