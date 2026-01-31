@@ -177,12 +177,12 @@ export function EligibilityAuditTool() {
   // Update progress based on current step
   useEffect(() => {
     const stepToProgress = {
-      "rebate-check": 0,
-      "checking-records": 20,
-      "grocery-card-offer": 20,
-      location: 40,
-      assistance: 60,
-      "assistance-alt": 60,
+      "rebate-check": 15,
+      "checking-records": 30,
+      "grocery-card-offer": 30,
+      location: 50,
+      assistance: 70,
+      "assistance-alt": 70,
       "checking-assistance": 100,
       results: 100,
       "results-grocery": 100,
