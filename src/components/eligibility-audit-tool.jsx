@@ -20,7 +20,6 @@ import { CheckingAnimation } from "@/components/checking-animation";
 import { MoneyAnimation } from "@/components/money-animation";
 import { CountdownTimer } from "@/components/countdown-timer";
 
-
 export function EligibilityAuditTool() {
   // ZIP code to location mapping - only include exact matches we're confident about
   const zipCodeData = {
@@ -65,80 +64,85 @@ export function EligibilityAuditTool() {
     return null;
   };
 
-  const [isInitializing, setIsInitializing] = useState(true);
-  const [currentStep, setCurrentStep] = useState("rebate-check");
-  const [userState, setUserState] = useState("Americans"); // Default to Americans
-  const [answers, setAnswers] = useState({
-    rebateClaimed: "",
-    zipCode: "",
-    state: "",
-    assistancePrograms: ["None of the above"],
-    flowPath: "standard", // "standard", "grocery"
-  });
-  const [progress, setProgress] = useState(0);
-  const [showTextBubble, setShowTextBubble] = useState(false);
-  const [caseId] = useState(
-    `RR-${Math.floor(1000 + Math.random() * 9000)}-HHS`
-  );
-
   // Convert state name to demonym (e.g., "California" -> "Californians")
   const getStateDemonym = (stateName) => {
     const demonyms = {
-      "Alabama": "Alabamians",
-      "Alaska": "Alaskans",
-      "Arizona": "Arizonans",
-      "Arkansas": "Arkansans",
-      "California": "Californians",
-      "Colorado": "Coloradans",
-      "Connecticut": "Connecticuters",
-      "Delaware": "Delawareans",
-      "Florida": "Floridians",
-      "Georgia": "Georgians",
-      "Hawaii": "Hawaiians",
-      "Idaho": "Idahoans",
-      "Illinois": "Illinoisans",
-      "Indiana": "Hoosiers",
-      "Iowa": "Iowans",
-      "Kansas": "Kansans",
-      "Kentucky": "Kentuckians",
-      "Louisiana": "Louisianans",
-      "Maine": "Mainers",
-      "Maryland": "Marylanders",
-      "Massachusetts": "Massachusetts residents",
-      "Michigan": "Michiganders",
-      "Minnesota": "Minnesotans",
-      "Mississippi": "Mississippians",
-      "Missouri": "Missourians",
-      "Montana": "Montanans",
-      "Nebraska": "Nebraskans",
-      "Nevada": "Nevadans",
+      Alabama: "Alabamians",
+      Alaska: "Alaskans",
+      Arizona: "Arizonans",
+      Arkansas: "Arkansans",
+      California: "Californians",
+      Colorado: "Coloradans",
+      Connecticut: "Connecticuters",
+      Delaware: "Delawareans",
+      Florida: "Floridians",
+      Georgia: "Georgians",
+      Hawaii: "Hawaiians",
+      Idaho: "Idahoans",
+      Illinois: "Illinoisans",
+      Indiana: "Hoosiers",
+      Iowa: "Iowans",
+      Kansas: "Kansans",
+      Kentucky: "Kentuckians",
+      Louisiana: "Louisianans",
+      Maine: "Mainers",
+      Maryland: "Marylanders",
+      Massachusetts: "Massachusetts residents",
+      Michigan: "Michiganders",
+      Minnesota: "Minnesotans",
+      Mississippi: "Mississippians",
+      Missouri: "Missourians",
+      Montana: "Montanans",
+      Nebraska: "Nebraskans",
+      Nevada: "Nevadans",
       "New Hampshire": "New Hampshirites",
       "New Jersey": "New Jerseyans",
       "New Mexico": "New Mexicans",
       "New York": "New Yorkers",
       "North Carolina": "North Carolinians",
       "North Dakota": "North Dakotans",
-      "Ohio": "Ohioans",
-      "Oklahoma": "Oklahomans",
-      "Oregon": "Oregonians",
-      "Pennsylvania": "Pennsylvanians",
+      Ohio: "Ohioans",
+      Oklahoma: "Oklahomans",
+      Oregon: "Oregonians",
+      Pennsylvania: "Pennsylvanians",
       "Rhode Island": "Rhode Islanders",
       "South Carolina": "South Carolinians",
       "South Dakota": "South Dakotans",
-      "Tennessee": "Tennesseans",
-      "Texas": "Texans",
-      "Utah": "Utahns",
-      "Vermont": "Vermonters",
-      "Virginia": "Virginians",
-      "Washington": "Washingtonians",
+      Tennessee: "Tennesseans",
+      Texas: "Texans",
+      Utah: "Utahns",
+      Vermont: "Vermonters",
+      Virginia: "Virginians",
+      Washington: "Washingtonians",
       "West Virginia": "West Virginians",
-      "Wisconsin": "Wisconsinites",
-      "Wyoming": "Wyomingites",
+      Wisconsin: "Wisconsinites",
+      Wyoming: "Wyomingites",
       "D.C.": "D.C. residents",
-      "District of Columbia": "D.C. residents"
+      "District of Columbia": "D.C. residents",
     };
     return demonyms[stateName] || "Americans";
   };
+
+  const [isInitializing, setIsInitializing] = useState(true);
+  const [currentStep, setCurrentStep] = useState("rebate-check");
+  const [userState, setUserState] = useState("Americans");
+  const [answers, setAnswers] = useState({
+    rebateClaimed: "",
+    zipCode: "",
+    state: "",
+    assistancePrograms: ["None of the above"],
+    flowPath: "standard",
+  });
+  const [progress, setProgress] = useState(0);
+  const [showTextBubble, setShowTextBubble] = useState(false);
+  const [caseId] = useState(
+    `RR-${Math.floor(1000 + Math.random() * 9000)}-HHS`
+  );
+  const [expiryDate] = useState(() => {
+    const date = new Date();
+    date.setMinutes(date.getMinutes() + 5);
+    return date;
+  });
 
   // Fetch user's state from IP on component mount
   useEffect(() => {
@@ -153,20 +157,6 @@ export function EligibilityAuditTool() {
         setUserState("Americans");
       });
   }, []);
-  const [expiryDate] = useState(() => {
-    const date = new Date();
-    // Set expiry to 5 minutes from now instead of 3 days
-    date.setMinutes(date.getMinutes() + 5);
-    return date;
-  });
-
-  // Determine which results page to show based on user selections
-  const shouldShowGroceryPath = () => {
-    return (
-      answers.assistancePrograms.includes("Medicaid") ||
-      answers.assistancePrograms.includes("Medicare")
-    );
-  };
 
   useEffect(() => {
     // Create the script element
@@ -187,7 +177,7 @@ export function EligibilityAuditTool() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsInitializing(false);
-    }, 1500); // 1.5 seconds
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -229,6 +219,14 @@ export function EligibilityAuditTool() {
     });
   }, [currentStep]);
 
+  // Determine which results page to show based on user selections
+  const shouldShowGroceryPath = () => {
+    return (
+      answers.assistancePrograms.includes("Medicaid") ||
+      answers.assistancePrograms.includes("Medicare")
+    );
+  };
+
   // Handle rebate check answer
   const handleRebateAnswer = (answer) => {
     setAnswers({ ...answers, rebateClaimed: answer });
@@ -261,40 +259,31 @@ export function EligibilityAuditTool() {
     }
   };
 
-
-
   // Handle assistance program selection
   const handleAssistanceSelect = (program) => {
     const updatedPrograms = [...answers.assistancePrograms];
 
     if (program === "None of the above") {
-      // If "None of the above" is selected, clear all other selections
       if (updatedPrograms.includes(program)) {
-        // If it's already selected and clicked again, do nothing
         return;
       } else {
-        // If it's not selected, clear all other selections and select only this
         setAnswers({ ...answers, assistancePrograms: ["None of the above"] });
         return;
       }
     } else {
-      // If any other option is selected, remove "None of the above"
       const withoutNone = updatedPrograms.filter(
         (p) => p !== "None of the above"
       );
 
       if (withoutNone.includes(program)) {
-        // If already selected, remove it
         const index = withoutNone.indexOf(program);
         withoutNone.splice(index, 1);
 
-        // If no programs left, add "None of the above" back
         if (withoutNone.length === 0) {
           setAnswers({ ...answers, assistancePrograms: ["None of the above"] });
           return;
         }
       } else {
-        // If not selected, add it
         withoutNone.push(program);
       }
 
@@ -306,9 +295,7 @@ export function EligibilityAuditTool() {
   const handleAssistanceSubmit = () => {
     setCurrentStep("checking-assistance");
 
-    // Simulate checking and move to results
     setTimeout(() => {
-      // Determine which results page to show
       if (answers.flowPath === "grocery") {
         if (
           answers.assistancePrograms.includes("Medicaid") ||
@@ -334,12 +321,14 @@ export function EligibilityAuditTool() {
 
       <Card className="border-t-4 border-t-primary shadow-lg mt-2 overflow-hidden">
         <CardContent className="p-0">
-          {isInitializing ? (
+          {isInitializing && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
                   <span>IRS Federal Subsidy Credit Verification Survey</span>
-                  <span className="text-base text-muted-foreground font-normal">Verify Your $3,000 Subsidy Status</span>
+                  <span className="text-base text-muted-foreground font-normal">
+                    Verify Your $3,000 Subsidy Status
+                  </span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
@@ -347,8 +336,12 @@ export function EligibilityAuditTool() {
               <div className="flex flex-col items-center justify-center py-12 sm:py-16 space-y-4">
                 <Loader2 className="h-12 w-12 text-primary animate-spin" />
                 <div className="text-center space-y-2">
-                  <p className="text-base sm:text-lg font-semibold text-foreground">Initializing secure session</p>
-                  <p className="text-sm text-muted-foreground">Please wait while we verify your eligibility</p>
+                  <p className="text-base sm:text-lg font-semibold text-foreground">
+                    Initializing secure session
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Please wait while we verify your eligibility
+                  </p>
                 </div>
               </div>
             </div>
@@ -359,7 +352,9 @@ export function EligibilityAuditTool() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
                   <span>IRS Federal Subsidy Credit Verification Survey</span>
-                  <span className="text-base text-muted-foreground font-normal">Verify Your $3,000 Subsidy Status</span>
+                  <span className="text-base text-muted-foreground font-normal">
+                    Verify Your $3,000 Subsidy Status
+                  </span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
@@ -418,7 +413,9 @@ export function EligibilityAuditTool() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
                   <span>FedBenefit Grocery Assistance</span>
-                  <span className="text-base text-muted-foreground font-normal">Additional Benefit Eligibility Check</span>
+                  <span className="text-base text-muted-foreground font-normal">
+                    Additional Benefit Eligibility Check
+                  </span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
@@ -459,7 +456,9 @@ export function EligibilityAuditTool() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
                   <span>FedBenefit Verification System</span>
-                  <span className="text-base text-muted-foreground font-normal">Checking Federal Records</span>
+                  <span className="text-base text-muted-foreground font-normal">
+                    Checking Federal Records
+                  </span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
@@ -491,7 +490,9 @@ export function EligibilityAuditTool() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
                   <span>FedBenefit Location Verification</span>
-                  <span className="text-base text-muted-foreground font-normal">$3,000 Federal Subsidy Program</span>
+                  <span className="text-base text-muted-foreground font-normal">
+                    $3,000 Federal Subsidy Program
+                  </span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
@@ -556,9 +557,9 @@ export function EligibilityAuditTool() {
                   {answers.zipCode.length === 5 && (
                     <div className="bg-green-50 border-l-4 border-green-500 p-3 flex items-center">
                       <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-                      <span className="text-sm font-bold text-green-700">
-                        REGION ELIGIBLE: FUNDS AVAILABLE
-                      </span>
+                      <p className="text-sm text-green-700 font-medium">
+                        ZIP code confirmed - you may qualify!
+                      </p>
                     </div>
                   )}
 
@@ -574,16 +575,14 @@ export function EligibilityAuditTool() {
             </div>
           )}
 
-
-
-
-
           {currentStep === "assistance" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
                   <span>FedBenefit Program Check</span>
-                  <span className="text-base text-muted-foreground font-normal">$3,000 Federal Subsidy Program</span>
+                  <span className="text-base text-muted-foreground font-normal">
+                    $3,000 Federal Subsidy Program
+                  </span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
@@ -604,9 +603,9 @@ export function EligibilityAuditTool() {
 
               <div className="space-y-3 sm:space-y-4">
                 <h3 className="text-base sm:text-lg font-medium">
-                  Are you currently enrolled in any of these programs?
+                  Are you currently enrolled in any of these programs? (Select
+                  all that apply)
                 </h3>
-                <p className="text-sm text-gray-500">Select all that apply</p>
 
                 <div className="space-y-2">
                   <Button
@@ -614,7 +613,7 @@ export function EligibilityAuditTool() {
                     className={cn(
                       "w-full justify-start h-12 text-base font-normal",
                       answers.assistancePrograms.includes("Medicaid") &&
-                      "border-primary bg-blue-50 text-foreground"
+                        "border-primary bg-blue-50 text-foreground"
                     )}
                     onClick={() => handleAssistanceSelect("Medicaid")}
                   >
@@ -626,7 +625,7 @@ export function EligibilityAuditTool() {
                     className={cn(
                       "w-full justify-start h-12 text-base font-normal",
                       answers.assistancePrograms.includes("Medicare") &&
-                      "border-primary bg-blue-50 text-foreground"
+                        "border-primary bg-blue-50 text-foreground"
                     )}
                     onClick={() => handleAssistanceSelect("Medicare")}
                   >
@@ -637,12 +636,12 @@ export function EligibilityAuditTool() {
                     variant="outline"
                     className={cn(
                       "w-full justify-start h-12 text-base font-normal",
-                      answers.assistancePrograms.includes("SNAP / EBT") &&
-                      "border-primary bg-blue-50 text-foreground"
+                      answers.assistancePrograms.includes("SNAP") &&
+                        "border-primary bg-blue-50 text-foreground"
                     )}
-                    onClick={() => handleAssistanceSelect("SNAP / EBT")}
+                    onClick={() => handleAssistanceSelect("SNAP")}
                   >
-                    SNAP / EBT
+                    SNAP (Food Stamps)
                   </Button>
 
                   <Button
@@ -657,22 +656,6 @@ export function EligibilityAuditTool() {
                   >
                     None of the above
                   </Button>
-                </div>
-
-                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 sm:p-4 mb-2 sm:mb-4">
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <Clock className="h-5 w-5 text-yellow-400" />
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-sm text-yellow-700">
-                        <span className="font-bold">FINAL STEP:</span> Complete
-                        your eligibility check to see if you can claim your
-                        $3,000 payment. your eligibility check to see if you can
-                        claim your $3,000 payment.
-                      </p>
-                    </div>
-                  </div>
                 </div>
 
                 <Button
@@ -690,19 +673,22 @@ export function EligibilityAuditTool() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
                   <span>FedBenefit Grocery Assistance</span>
-                  <span className="text-base text-muted-foreground font-normal">Additional Program Verification</span>
+                  <span className="text-base text-muted-foreground font-normal">
+                    Additional Program Verification
+                  </span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
-              <div className="bg-green-50 border-l-4 border-green-500 p-3 sm:p-4 mb-2 sm:mb-4">
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-3 sm:p-4 mb-2 sm:mb-4">
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <ShoppingCart className="h-5 w-5 text-green-500" />
+                    <ShoppingCart className="h-5 w-5 text-blue-500" />
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm text-green-700 font-bold">
-                      You may qualify for a $500 grocery card benefit!
+                    <p className="text-sm text-blue-700">
+                      To qualify for the $500 Grocery Card, we need to verify
+                      your eligibility.
                     </p>
                   </div>
                 </div>
@@ -710,9 +696,9 @@ export function EligibilityAuditTool() {
 
               <div className="space-y-3 sm:space-y-4">
                 <h3 className="text-base sm:text-lg font-medium">
-                  Are you currently enrolled in any of these programs?
+                  Are you currently enrolled in any of these programs? (Select
+                  all that apply)
                 </h3>
-                <p className="text-sm text-gray-500">Select all that apply</p>
 
                 <div className="space-y-2">
                   <Button
@@ -720,7 +706,7 @@ export function EligibilityAuditTool() {
                     className={cn(
                       "w-full justify-start h-12 text-base font-normal",
                       answers.assistancePrograms.includes("Medicaid") &&
-                      "border-blue-600 bg-blue-50"
+                        "border-primary bg-blue-50 text-foreground"
                     )}
                     onClick={() => handleAssistanceSelect("Medicaid")}
                   >
@@ -732,7 +718,7 @@ export function EligibilityAuditTool() {
                     className={cn(
                       "w-full justify-start h-12 text-base font-normal",
                       answers.assistancePrograms.includes("Medicare") &&
-                      "border-blue-600 bg-blue-50"
+                        "border-primary bg-blue-50 text-foreground"
                     )}
                     onClick={() => handleAssistanceSelect("Medicare")}
                   >
@@ -743,12 +729,12 @@ export function EligibilityAuditTool() {
                     variant="outline"
                     className={cn(
                       "w-full justify-start h-12 text-base font-normal",
-                      answers.assistancePrograms.includes("SNAP / EBT") &&
-                      "border-blue-600 bg-blue-50"
+                      answers.assistancePrograms.includes("SNAP") &&
+                        "border-primary bg-blue-50 text-foreground"
                     )}
-                    onClick={() => handleAssistanceSelect("SNAP / EBT")}
+                    onClick={() => handleAssistanceSelect("SNAP")}
                   >
-                    SNAP / EBT
+                    SNAP (Food Stamps)
                   </Button>
 
                   <Button
@@ -757,7 +743,7 @@ export function EligibilityAuditTool() {
                       "w-full justify-start h-12 text-base font-normal",
                       answers.assistancePrograms.includes(
                         "None of the above"
-                      ) && "border-blue-600 bg-blue-50"
+                      ) && "border-primary bg-blue-50 text-foreground"
                     )}
                     onClick={() => handleAssistanceSelect("None of the above")}
                   >
@@ -765,26 +751,11 @@ export function EligibilityAuditTool() {
                   </Button>
                 </div>
 
-                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 sm:p-4 mb-2 sm:mb-4">
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <Clock className="h-5 w-5 text-yellow-400" />
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-sm text-yellow-700">
-                        <span className="font-bold">FINAL STEP:</span> Complete
-                        your eligibility check to see if you can claim your $500
-                        grocery card.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
                 <Button
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all duration-300 shadow-[0_0_10px_rgba(59,130,246,0.5)] hover:shadow-[0_0_15px_rgba(59,130,246,0.7)]"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold"
                   onClick={handleAssistanceSubmit}
                 >
-                  Complete Eligibility Check Now
+                  Check My Eligibility
                 </Button>
               </div>
             </div>
@@ -795,13 +766,15 @@ export function EligibilityAuditTool() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
                   <span>FedBenefit Final Verification</span>
-                  <span className="text-base text-muted-foreground font-normal">Confirming Eligibility Status</span>
+                  <span className="text-base text-muted-foreground font-normal">
+                    Confirming Eligibility Status
+                  </span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
 
               <div className="flex flex-col items-center justify-center py-4 sm:py-8">
-                <CheckingAnimation text="Finalizing your eligibility status..." />
+                <CheckingAnimation text="Finalizing eligibility assessment..." />
               </div>
             </div>
           )}
@@ -815,64 +788,91 @@ export function EligibilityAuditTool() {
                 <FileCheck className="h-6 w-6 text-primary" />
               </div>
 
-              <div className="flex flex-col items-center justify-center py-3 sm:py-4">
-                <MoneyAnimation />
-                <h3 className="text-lg sm:text-xl font-bold mt-3 sm:mt-4 text-green-600 flex items-center">
-                  You must call now to finalize.
-                </h3>
-              </div>
-
-              <div className="bg-green-50 border border-green-200 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
-                  <p className="text-sm sm:text-base">
-                    <span className="font-bold">APPROVED:</span> $3,000 Federal Subsidy Credits
+              <div className="space-y-3 sm:space-y-4">
+                <div className="bg-green-50 border-2 border-green-500 p-3 sm:p-4 rounded-lg">
+                  <div className="flex items-center mb-2">
+                    <CheckCircle className="h-6 w-6 text-green-600 mr-2" />
+                    <h3 className="text-lg sm:text-xl font-bold text-green-800">
+                      CONGRATULATIONS!
+                    </h3>
+                  </div>
+                  <p className="text-sm sm:text-base text-green-800 font-medium">
+                    Based on your responses, you are APPROVED to claim your
+                    $3,000 Federal Subsidy Credits.
                   </p>
                 </div>
 
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
-                  <p className="text-sm sm:text-base">
-                    <span className="font-bold">APPROVED:</span> Benefits
-                    Support Package
+                <div className="border-2 border-gray-300 rounded-lg p-3 sm:p-4 space-y-2">
+                  <div className="flex justify-between py-1 border-b border-gray-200">
+                    <span className="text-sm text-gray-600">Case ID:</span>
+                    <span className="text-sm font-mono font-semibold">
+                      {caseId}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between py-1 border-b border-gray-200">
+                    <span className="text-sm text-gray-600">Location:</span>
+                    <span className="text-sm font-semibold">
+                      {answers.state || "Eligible State"}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between py-1 border-b border-gray-200">
+                    <span className="text-sm text-gray-600">Status:</span>
+                    <span className="text-sm font-semibold text-green-600">
+                      APPROVED
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between py-2 bg-blue-50 -mx-4 px-4 rounded">
+                    <span className="text-sm font-medium">Amount:</span>
+                    <span className="text-xl font-bold text-green-600">
+                      $3,000.00
+                    </span>
+                  </div>
+                </div>
+
+                <div className="bg-red-50 border-l-4 border-red-500 p-3 sm:p-4">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <Clock className="h-5 w-5 text-red-500" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm text-red-700 font-bold">
+                        URGENT: You must claim your payment before{" "}
+                        <CountdownTimer expiryDate={expiryDate} />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-lg text-center">
+                  <MoneyAnimation />
+                  <h3 className="text-white text-xl sm:text-2xl font-bold mb-2">
+                    Claim Your $3,000 Now
+                  </h3>
+                  <p className="text-white text-sm mb-4">
+                    Speak with a verified specialist to complete your claim
+                  </p>
+
+                  <a
+                    href="tel:18663988047"
+                    className="inline-block w-full bg-white text-green-600 font-bold py-4 px-6 rounded-lg text-lg hover:bg-gray-100 transition-colors"
+                  >
+                    📞 Call Now: 1-866-398-8047
+                  </a>
+
+                  <p className="text-white text-xs mt-3">
+                    Available 7 Days a Week • FREE Consultation
                   </p>
                 </div>
-              </div>
 
-              <a
-                href="tel:+1-888-777-6666"
-                className="w-full bg-green-600 hover:bg-green-700 h-12 sm:h-14 text-sm sm:text-base text-white flex items-center justify-center rounded-md font-medium"
-              >
-                Connect to Agent Now
-              </a>
-
-              <p className="text-xs sm:text-sm text-center mt-2 sm:mt-3 mb-3 sm:mb-4">
-                You'll speak with a certified Benefits Agent to confirm your
-                identity and receive your benefits support package and $1400 Health Subsidy.
-              </p>
-
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-2 sm:p-3 space-y-1.5 max-w-[95%] mx-auto text-sm">
-                <p className="text-xs sm:text-sm">
-                  <span className="font-bold">Case ID:</span> {caseId}
-                </p>
-                <div className="flex items-center space-x-2">
-                  <Clock className="h-4 w-4 text-red-600" />
-                  <p className="text-xs sm:text-sm text-red-600 font-bold">
-                    Agent Available Now:
+                <div className="text-center text-sm text-gray-500">
+                  <p>
+                    Reference your Case ID ({caseId}) when calling to expedite
+                    processing.
                   </p>
                 </div>
-                <CountdownTimer
-                  expiryDate={expiryDate}
-                  isActive={currentStep === "results"}
-                />
-              </div>
-
-              <div className="mt-4 overflow-hidden max-w-[95%] mx-auto">
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20design%20-%202025-04-15T124406.384-3248aFWOiGZlS4MA8e7Ig278mb5zWs.png"
-                  alt="Recovery Credit Card showing $1,407.32 balance"
-                  className="w-full h-auto"
-                />
               </div>
             </div>
           )}
@@ -886,79 +886,108 @@ export function EligibilityAuditTool() {
                 <FileCheck className="h-6 w-6 text-primary" />
               </div>
 
-              <div className="flex flex-col items-center justify-center py-3 sm:py-4">
-                <div className="relative w-64 h-40 flex items-center justify-center">
-                  {/* Background glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-blue-50 rounded-xl shadow-lg" />
+              <div className="space-y-3 sm:space-y-4">
+                <div className="bg-green-50 border-2 border-green-500 p-3 sm:p-4 rounded-lg">
+                  <div className="flex items-center mb-2">
+                    <CheckCircle className="h-6 w-6 text-green-600 mr-2" />
+                    <h3 className="text-lg sm:text-xl font-bold text-green-800">
+                      DOUBLE BENEFIT APPROVED!
+                    </h3>
+                  </div>
+                  <p className="text-sm sm:text-base text-green-800 font-medium">
+                    You qualify for BOTH the $3,000 Federal Subsidy Credits AND
+                    a $500 Grocery Card!
+                  </p>
+                </div>
 
-                  {/* Border effect */}
-                  <div className="absolute inset-0 border-2 border-blue-400 rounded-xl opacity-70" />
+                <div className="border-2 border-gray-300 rounded-lg p-3 sm:p-4 space-y-2">
+                  <div className="flex justify-between py-1 border-b border-gray-200">
+                    <span className="text-sm text-gray-600">Case ID:</span>
+                    <span className="text-sm font-mono font-semibold">
+                      {caseId}
+                    </span>
+                  </div>
 
-                  {/* Grocery card and amount */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <div className="text-blue-700 font-semibold text-lg mb-2 text-center">
-                      You were found eligible for
+                  <div className="flex justify-between py-1 border-b border-gray-200">
+                    <span className="text-sm text-gray-600">
+                      Assistance Programs:
+                    </span>
+                    <span className="text-sm font-semibold">
+                      {answers.assistancePrograms.join(", ")}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between py-1 border-b border-gray-200">
+                    <span className="text-sm text-gray-600">Status:</span>
+                    <span className="text-sm font-semibold text-green-600">
+                      DUAL APPROVED
+                    </span>
+                  </div>
+
+                  <div className="py-2 bg-blue-50 -mx-4 px-4 space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-sm">Federal Subsidy Credits:</span>
+                      <span className="text-lg font-bold text-green-600">
+                        $3,000
+                      </span>
                     </div>
-
-                    <div className="flex items-center text-blue-600 animate-pulse">
-                      <ShoppingCart
-                        className="h-14 w-14 drop-shadow-md"
-                        strokeWidth={2.5}
-                      />
-                      <div className="flex flex-col ml-1">
-                        <span className="text-4xl font-bold tracking-tight drop-shadow-md">
-                          $500
-                        </span>
-                        <span className="text-sm text-blue-700 font-medium">
-                          Monthly Grocery Card
-                        </span>
-                      </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm">Grocery Assistance:</span>
+                      <span className="text-lg font-bold text-green-600">
+                        $500
+                      </span>
+                    </div>
+                    <div className="flex justify-between border-t-2 border-green-600 pt-1 mt-1">
+                      <span className="text-sm font-bold">Total Value:</span>
+                      <span className="text-xl font-bold text-green-600">
+                        $3,500
+                      </span>
                     </div>
                   </div>
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold mt-3 sm:mt-4 text-blue-600 flex items-center">
-                  You must call now to finalize.
-                </h3>
-              </div>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5" />
-                  <p className="text-sm sm:text-base">
-                    <span className="font-bold">APPROVED:</span> $500/month
-                    Grocery Benefit Card
+                <div className="bg-red-50 border-l-4 border-red-500 p-3 sm:p-4">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <Clock className="h-5 w-5 text-red-500" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm text-red-700 font-bold">
+                        URGENT: Limited spots available. Claim before{" "}
+                        <CountdownTimer expiryDate={expiryDate} />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-lg text-center">
+                  <MoneyAnimation />
+                  <h3 className="text-white text-xl sm:text-2xl font-bold mb-2">
+                    Claim Your $3,500 in Benefits
+                  </h3>
+                  <p className="text-white text-sm mb-4">
+                    Call now to secure BOTH your Federal Subsidy Credits and
+                    Grocery Card
+                  </p>
+
+                  <a
+                    href="tel:18663988047"
+                    className="inline-block w-full bg-white text-green-600 font-bold py-4 px-6 rounded-lg text-lg hover:bg-gray-100 transition-colors"
+                  >
+                    📞 Call Now: 1-866-398-8047
+                  </a>
+
+                  <p className="text-white text-xs mt-3">
+                    Priority Processing • FREE Consultation
                   </p>
                 </div>
 
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5" />
-                  <p className="text-sm sm:text-base">
-                    <span className="font-bold">APPROVED:</span> Nutrition
-                    Assistance Program
+                <div className="text-center text-sm text-gray-500">
+                  <p>
+                    Reference your Case ID ({caseId}) when calling to claim all
+                    eligible benefits.
                   </p>
                 </div>
-              </div>
-
-              <a
-                href="https://www.rpjh8fm.com/T58MD/52TFBR/?sub1=pathbmedi1400"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-blue-600 hover:bg-blue-700 h-12 sm:h-14 text-sm sm:text-base text-white flex items-center justify-center rounded-md font-medium"
-              >
-                Finalize Medicare Allowance Here
-              </a>
-
-              <p className="text-xs sm:text-sm text-center mt-2 sm:mt-3 mb-3 sm:mb-4">
-                You'll speak with a certified Benefits Agent to confirm your
-                identity and receive your $500 monthly grocery card.
-              </p>
-
-              <div className="max-w-[95%] mx-auto mt-2">
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Mar%2027%2C%202025%2C%2008_42_04%20PM-7qpurFvb7VzuR2sdZGWnbP3ABH95ht.png"
-                  alt="Medicare Wellness Card - $2,600 Prepaid"
-                  className="w-full"
-                />
               </div>
             </div>
           )}
@@ -972,77 +1001,85 @@ export function EligibilityAuditTool() {
                 <FileCheck className="h-6 w-6 text-primary" />
               </div>
 
-              <div className="flex flex-col items-center justify-center py-3 sm:py-4">
-                <div className="relative w-64 h-40 flex items-center justify-center">
-                  {/* Background glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-blue-50 rounded-xl shadow-lg" />
+              <div className="space-y-3 sm:space-y-4">
+                <div className="bg-yellow-50 border-2 border-yellow-500 p-3 sm:p-4 rounded-lg">
+                  <div className="flex items-center mb-2">
+                    <AlertCircle className="h-6 w-6 text-yellow-600 mr-2" />
+                    <h3 className="text-lg sm:text-xl font-bold text-yellow-800">
+                      ADDITIONAL VERIFICATION NEEDED
+                    </h3>
+                  </div>
+                  <p className="text-sm sm:text-base text-yellow-800 font-medium">
+                    To process your $500 Grocery Card application, please speak
+                    with a specialist.
+                  </p>
+                </div>
 
-                  {/* Border effect */}
-                  <div className="absolute inset-0 border-2 border-blue-400 rounded-xl opacity-70" />
+                <div className="border-2 border-gray-300 rounded-lg p-3 sm:p-4 space-y-2">
+                  <div className="flex justify-between py-1 border-b border-gray-200">
+                    <span className="text-sm text-gray-600">Case ID:</span>
+                    <span className="text-sm font-mono font-semibold">
+                      {caseId}
+                    </span>
+                  </div>
 
-                  {/* Grocery card and amount */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <div className="text-blue-700 font-semibold text-lg mb-2 text-center">
-                      You were found eligible for
+                  <div className="flex justify-between py-1 border-b border-gray-200">
+                    <span className="text-sm text-gray-600">Status:</span>
+                    <span className="text-sm font-semibold text-yellow-600">
+                      PENDING VERIFICATION
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between py-2 bg-blue-50 -mx-4 px-4 rounded">
+                    <span className="text-sm font-medium">
+                      Potential Benefit:
+                    </span>
+                    <span className="text-xl font-bold text-green-600">
+                      $500
+                    </span>
+                  </div>
+                </div>
+
+                <div className="bg-blue-50 border-l-4 border-blue-500 p-3 sm:p-4">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <ShoppingCart className="h-5 w-5 text-blue-500" />
                     </div>
-
-                    <div className="flex items-center text-blue-600 animate-pulse">
-                      <ShoppingCart
-                        className="h-14 w-14 drop-shadow-md"
-                        strokeWidth={2.5}
-                      />
-                      <div className="flex flex-col ml-1">
-                        <span className="text-4xl font-bold tracking-tight drop-shadow-md">
-                          $500
-                        </span>
-                        <span className="text-sm text-blue-700 font-medium">
-                          Monthly Grocery Card
-                        </span>
-                      </div>
+                    <div className="ml-3">
+                      <p className="text-sm text-blue-700">
+                        Our specialists can help verify your eligibility for
+                        additional grocery assistance programs.
+                      </p>
                     </div>
                   </div>
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold mt-3 sm:mt-4 text-blue-600 flex items-center">
-                  You must call now to finalize.
-                </h3>
-              </div>
 
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5" />
-                  <p className="text-sm sm:text-base">
-                    <span className="font-bold">APPROVED:</span> $500/month
-                    Grocery Benefit Card
+                <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-lg text-center">
+                  <h3 className="text-white text-xl sm:text-2xl font-bold mb-2">
+                    Complete Your Application
+                  </h3>
+                  <p className="text-white text-sm mb-4">
+                    Speak with a specialist to verify eligibility
+                  </p>
+
+                  <a
+                    href="tel:18663988047"
+                    className="inline-block w-full bg-white text-blue-600 font-bold py-4 px-6 rounded-lg text-lg hover:bg-gray-100 transition-colors"
+                  >
+                    📞 Call Now: 1-866-398-8047
+                  </a>
+
+                  <p className="text-white text-xs mt-3">
+                    FREE Verification • No Obligation
                   </p>
                 </div>
 
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5" />
-                  <p className="text-sm sm:text-base">
-                    <span className="font-bold">APPROVED:</span> Nutrition
-                    Assistance Program
+                <div className="text-center text-sm text-gray-500">
+                  <p>
+                    Reference your Case ID ({caseId}) when calling for faster
+                    service.
                   </p>
                 </div>
-              </div>
-
-              <a
-                href="tel:+1-888-777-6666"
-                className="w-full bg-blue-600 hover:bg-blue-700 h-12 sm:h-14 text-sm sm:text-base text-white flex items-center justify-center rounded-md font-medium"
-              >
-                Connect With Agent
-              </a>
-
-              <p className="text-xs sm:text-sm text-center mt-2 sm:mt-3 mb-3 sm:mb-4">
-                You'll speak with a certified Benefits Agent to confirm your
-                identity and receive your $500 monthly grocery card.
-              </p>
-
-              <div className="max-w-[95%] mx-auto mt-2">
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Mar%2027%2C%202025%2C%2008_42_04%20PM-7qpurFvb7VzuR2sdZGWnbP3ABH95ht.png"
-                  alt="Medicare Wellness Card - $2,600 Prepaid"
-                  className="w-full"
-                />
               </div>
             </div>
           )}
