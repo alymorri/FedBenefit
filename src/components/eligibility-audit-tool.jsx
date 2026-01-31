@@ -66,6 +66,7 @@ export function EligibilityAuditTool() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState("rebate-check");
+  const [userState, setUserState] = useState("Americans"); // Default to Americans
   const [answers, setAnswers] = useState({
     rebateClaimed: "",
     zipCode: "",
@@ -78,6 +79,79 @@ export function EligibilityAuditTool() {
   const [caseId] = useState(
     `RR-${Math.floor(1000 + Math.random() * 9000)}-HHS`
   );
+
+  // Convert state name to demonym (e.g., "California" -> "Californians")
+  const getStateDemonym = (stateName) => {
+    const demonyms = {
+      "Alabama": "Alabamians",
+      "Alaska": "Alaskans",
+      "Arizona": "Arizonans",
+      "Arkansas": "Arkansans",
+      "California": "Californians",
+      "Colorado": "Coloradans",
+      "Connecticut": "Connecticuters",
+      "Delaware": "Delawareans",
+      "Florida": "Floridians",
+      "Georgia": "Georgians",
+      "Hawaii": "Hawaiians",
+      "Idaho": "Idahoans",
+      "Illinois": "Illinoisans",
+      "Indiana": "Hoosiers",
+      "Iowa": "Iowans",
+      "Kansas": "Kansans",
+      "Kentucky": "Kentuckians",
+      "Louisiana": "Louisianans",
+      "Maine": "Mainers",
+      "Maryland": "Marylanders",
+      "Massachusetts": "Massachusetts residents",
+      "Michigan": "Michiganders",
+      "Minnesota": "Minnesotans",
+      "Mississippi": "Mississippians",
+      "Missouri": "Missourians",
+      "Montana": "Montanans",
+      "Nebraska": "Nebraskans",
+      "Nevada": "Nevadans",
+      "New Hampshire": "New Hampshirites",
+      "New Jersey": "New Jerseyans",
+      "New Mexico": "New Mexicans",
+      "New York": "New Yorkers",
+      "North Carolina": "North Carolinians",
+      "North Dakota": "North Dakotans",
+      "Ohio": "Ohioans",
+      "Oklahoma": "Oklahomans",
+      "Oregon": "Oregonians",
+      "Pennsylvania": "Pennsylvanians",
+      "Rhode Island": "Rhode Islanders",
+      "South Carolina": "South Carolinians",
+      "South Dakota": "South Dakotans",
+      "Tennessee": "Tennesseans",
+      "Texas": "Texans",
+      "Utah": "Utahns",
+      "Vermont": "Vermonters",
+      "Virginia": "Virginians",
+      "Washington": "Washingtonians",
+      "West Virginia": "West Virginians",
+      "Wisconsin": "Wisconsinites",
+      "Wyoming": "Wyomingites",
+      "D.C.": "D.C. residents",
+      "District of Columbia": "D.C. residents"
+    };
+    return demonyms[stateName] || "Americans";
+  };
+
+  // Fetch user's state from IP on component mount
+  useEffect(() => {
+    fetch("https://ipapi.co/json/")
+      .then((response) => response.json())
+      .then((data) => {
+        const stateName = data.region || "";
+        const demonym = getStateDemonym(stateName);
+        setUserState(demonym);
+      })
+      .catch(() => {
+        setUserState("Americans");
+      });
+  }, []);
   const [expiryDate] = useState(() => {
     const date = new Date();
     // Set expiry to 5 minutes from now instead of 3 days
@@ -281,7 +355,7 @@ export function EligibilityAuditTool() {
                   <div className="ml-3">
                     <p className="text-sm text-yellow-700">
                       <span className="font-bold">URGENT:</span> The IRS
-                      estimates 5.5 million Americans still haven't claimed
+                      estimates 5.5 million {userState} still haven't claimed
                       their $3,000 Federal Subsidy Credits.
                     </p>
                   </div>
