@@ -305,6 +305,57 @@ export function EligibilityAuditTool() {
     }, 1500);
   };
 
+  if (isInitializing) {
+    return (
+      <div className="relative">
+        <div className="absolute top-0 left-0 right-0 z-10">
+          <ProgressBar progress={15} />
+        </div>
+
+        <Card className="border-t-4 border-t-primary shadow-lg mt-2 overflow-hidden">
+          <CardContent className="p-0">
+            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>IRS Federal Subsidy Credit Verification Survey</span>
+                  <span className="text-base text-muted-foreground font-normal">
+                    Verify Your $3,000 Subsidy Status
+                  </span>
+                </h2>
+                <BadgeCheck className="h-6 w-6 text-primary" />
+              </div>
+
+              <div className="flex flex-col items-center justify-center py-12 sm:py-16 space-y-4">
+                <div className="relative">
+                  <Loader2 className="h-12 w-12 text-primary animate-spin" />
+                </div>
+                <div className="text-center space-y-2">
+                  <p className="text-base sm:text-lg font-semibold text-foreground">
+                    {[
+                      "Initializing secure session",
+                      "Verifying credentials",
+                      "Connecting to IRS database",
+                      "Checking eligibility status",
+                    ][loadingText]}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Secure Federal Verification System
+                  </p>
+                  <div className="flex items-center justify-center gap-2 pt-2">
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></div>
+                    <p className="text-xs text-muted-foreground font-medium">
+                      ENCRYPTED CONNECTION
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="relative">
       <div className="absolute top-0 left-0 right-0 z-10">
