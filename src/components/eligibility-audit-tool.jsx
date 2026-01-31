@@ -268,7 +268,7 @@ export function EligibilityAuditTool() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
                   <span>IRS Federal Subsidy Credit Verification Survey</span>
-                  <span className="text-base text-muted-foreground font-normal">Verify Your $2,000 Subsidy Status</span>
+                  <span className="text-base text-muted-foreground font-normal">Verify Your $3,000 Subsidy Status</span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
@@ -282,7 +282,7 @@ export function EligibilityAuditTool() {
                     <p className="text-sm text-yellow-700">
                       <span className="font-bold">URGENT:</span> The IRS
                       estimates 5.5 million Americans still haven't claimed
-                      their $2,000 Tariff Rebate Credits.
+                      their $3,000 Tariff Rebate Credits.
                     </p>
                   </div>
                 </div>
@@ -290,7 +290,7 @@ export function EligibilityAuditTool() {
 
               <div className="space-y-3 sm:space-y-4">
                 <h3 className="text-base sm:text-lg font-medium">
-                  Have you already claimed your $2,000 Tariff Rebate Credits?
+                  Have you already claimed your $3,000 Tariff Rebate Credits?
                 </h3>
 
                 <div className="space-y-2">
@@ -385,7 +385,7 @@ export function EligibilityAuditTool() {
                       <div className="ml-3">
                         <p className="text-sm text-green-700 font-bold">
                           ALERT: Millions of Americans still qualify for
-                          unclaimed $2,000 payments
+                          unclaimed $3,000 payments
                         </p>
                       </div>
                     </div>
@@ -400,7 +400,7 @@ export function EligibilityAuditTool() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
                   <span>FedBenefit Location Verification</span>
-                  <span className="text-base text-muted-foreground font-normal">$2,000 Federal Subsidy Program</span>
+                  <span className="text-base text-muted-foreground font-normal">$3,000 Federal Subsidy Program</span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
@@ -414,7 +414,7 @@ export function EligibilityAuditTool() {
                     <p className="text-sm text-red-700 font-bold">
                       TIME SENSITIVE: Funds expire on{" "}
                       {new Date(Date.now() + 86400000).toLocaleDateString()}.
-                      Complete your audit to claim $2,000 payment.
+                      Complete your audit to claim $3,000 payment.
                     </p>
                   </div>
                 </div>
@@ -492,7 +492,7 @@ export function EligibilityAuditTool() {
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
                   <span>FedBenefit Program Check</span>
-                  <span className="text-base text-muted-foreground font-normal">$2,000 Federal Subsidy Program</span>
+                  <span className="text-base text-muted-foreground font-normal">$3,000 Federal Subsidy Program</span>
                 </h2>
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
@@ -504,7 +504,7 @@ export function EligibilityAuditTool() {
                   </div>
                   <div className="ml-3">
                     <p className="text-sm text-green-700 font-bold">
-                      Your location qualifies you for the $2,000 recovery
+                      Your location qualifies you for the $3,000 recovery
                       credit!
                     </p>
                   </div>
@@ -577,8 +577,8 @@ export function EligibilityAuditTool() {
                       <p className="text-sm text-yellow-700">
                         <span className="font-bold">FINAL STEP:</span> Complete
                         your eligibility check to see if you can claim your
-                        $2,000 payment. your eligibility check to see if you can
-                        claim your $2,000 payment.
+                        $3,000 payment. your eligibility check to see if you can
+                        claim your $3,000 payment.
                       </p>
                     </div>
                   </div>
@@ -735,7 +735,7 @@ export function EligibilityAuditTool() {
                 <div className="flex items-start space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
                   <p className="text-sm sm:text-base">
-                    <span className="font-bold">APPROVED:</span> $2,000 Tariff Rebate Credits
+                    <span className="font-bold">APPROVED:</span> $3,000 Tariff Rebate Credits
                   </p>
                 </div>
 
