@@ -11,16 +11,25 @@ function App() {
 
   useEffect(() => {
     // Fetch user location based on IP
+    console.log("[v0] Fetching user location...");
     fetch("https://ipapi.co/json/")
-      .then((response) => response.json())
+      .then((response) => {
+        console.log("[v0] API response status:", response.status);
+        return response.json();
+      })
       .then((data) => {
+        console.log("[v0] Location data received:", data);
+        const city = data.city || "Washington";
+        const state = data.region || data.region_code || "D.C.";
+        console.log("[v0] Setting location to:", city, state);
         setLocationInfo({
-          city: data.city || "Washington",
-          state: data.region || data.region_code || "D.C.",
+          city: city,
+          state: state,
           loading: false,
         });
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log("[v0] Location fetch error:", error);
         setLocationInfo({
           city: "Washington",
           state: "D.C.",
@@ -63,8 +72,8 @@ function App() {
                   <span className="font-normal">
                     {locationInfo.loading ? "Loading..." : `${locationInfo.city}, ${locationInfo.state}`}
                   </span>
-                  <span className="hidden sm:inline">•</span>
-                  <span className="font-normal hidden sm:inline">{formatDate()}</span>
+                  <span>•</span>
+                  <span className="font-normal">{formatDate()}</span>
                 </div>
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>

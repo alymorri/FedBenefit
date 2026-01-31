@@ -18,7 +18,7 @@ import { ProgressBar } from "@/components/progress-bar";
 import { CheckingAnimation } from "@/components/checking-animation";
 import { MoneyAnimation } from "@/components/money-animation";
 import { CountdownTimer } from "@/components/countdown-timer";
-import { LoadingScreen } from "@/components/loading-screen";
+
 
 export function EligibilityAuditTool() {
   // ZIP code to location mapping - only include exact matches we're confident about
@@ -64,7 +64,7 @@ export function EligibilityAuditTool() {
     return null;
   };
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isInitializing, setIsInitializing] = useState(true);
   const [currentStep, setCurrentStep] = useState("rebate-check");
   const [userState, setUserState] = useState("Americans"); // Default to Americans
   const [answers, setAnswers] = useState({
@@ -182,11 +182,11 @@ export function EligibilityAuditTool() {
     };
   }, []);
 
-  // Show loading screen for 1.5-2 seconds
+  // Show initializing state briefly
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1800); // 1.8 seconds
+      setIsInitializing(false);
+    }, 1500); // 1.5 seconds
 
     return () => clearTimeout(timer);
   }, []);
@@ -325,10 +325,6 @@ export function EligibilityAuditTool() {
     }, 1500);
   };
 
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
-
   return (
     <div className="relative">
       <div className="absolute top-0 left-0 right-0 z-10">
@@ -337,7 +333,27 @@ export function EligibilityAuditTool() {
 
       <Card className="border-t-4 border-t-primary shadow-lg mt-2 overflow-hidden">
         <CardContent className="p-0">
-          {currentStep === "rebate-check" && (
+          {isInitializing ? (
+            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
+                  <span>IRS Federal Subsidy Credit Verification Survey</span>
+                  <span className="text-base text-muted-foreground font-normal">Verify Your $3,000 Subsidy Status</span>
+                </h2>
+                <BadgeCheck className="h-6 w-6 text-primary" />
+              </div>
+
+              <div className="flex flex-col items-center justify-center py-12 sm:py-16 space-y-4">
+                <Loader2 className="h-12 w-12 text-primary animate-spin" />
+                <div className="text-center space-y-2">
+                  <p className="text-base sm:text-lg font-semibold text-foreground">Initializing secure session</p>
+                  <p className="text-sm text-muted-foreground">Please wait while we verify your eligibility</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {!isInitializing && currentStep === "rebate-check" && (
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold flex flex-col text-foreground">
