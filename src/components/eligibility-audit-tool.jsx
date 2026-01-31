@@ -124,6 +124,7 @@ export function EligibilityAuditTool() {
   };
 
   const [isInitializing, setIsInitializing] = useState(true);
+  const [loadingText, setLoadingText] = useState(0);
   const [currentStep, setCurrentStep] = useState("rebate-check");
   const [userState, setUserState] = useState("Americans");
   const [answers, setAnswers] = useState({
@@ -173,13 +174,28 @@ export function EligibilityAuditTool() {
     };
   }, []);
 
-  // Show initializing state briefly
+  // Show initializing state briefly with rotating text
   useEffect(() => {
+    const loadingMessages = [
+      "Initializing secure session",
+      "Verifying credentials",
+      "Connecting to IRS database",
+      "Checking eligibility status",
+    ];
+
+    const textInterval = setInterval(() => {
+      setLoadingText((prev) => (prev + 1) % loadingMessages.length);
+    }, 400); // Change text every 400ms
+
     const timer = setTimeout(() => {
       setIsInitializing(false);
-    }, 1500);
+      clearInterval(textInterval);
+    }, 1500); // 1.5 seconds total
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(textInterval);
+    };
   }, []);
 
   // Update progress based on current step
@@ -334,14 +350,27 @@ export function EligibilityAuditTool() {
               </div>
 
               <div className="flex flex-col items-center justify-center py-12 sm:py-16 space-y-4">
-                <Loader2 className="h-12 w-12 text-primary animate-spin" />
+                <div className="relative">
+                  <Loader2 className="h-12 w-12 text-primary animate-spin" />
+                </div>
                 <div className="text-center space-y-2">
                   <p className="text-base sm:text-lg font-semibold text-foreground">
-                    Initializing secure session
+                    {[
+                      "Initializing secure session",
+                      "Verifying credentials",
+                      "Connecting to IRS database",
+                      "Checking eligibility status",
+                    ][loadingText]}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Please wait while we verify your eligibility
+                    Secure Federal Verification System
                   </p>
+                  <div className="flex items-center justify-center gap-2 pt-2">
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></div>
+                    <p className="text-xs text-muted-foreground font-medium">
+                      ENCRYPTED CONNECTION
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
