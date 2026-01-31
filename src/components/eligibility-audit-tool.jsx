@@ -12,6 +12,7 @@ import {
   FileCheck,
   BadgeCheck,
   ShoppingCart,
+  Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProgressBar } from "@/components/progress-bar";
