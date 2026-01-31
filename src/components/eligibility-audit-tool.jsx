@@ -132,7 +132,7 @@ export function EligibilityAuditTool() {
     assistancePrograms: ["None of the above"],
     flowPath: "standard",
   });
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(15);
   const [showTextBubble, setShowTextBubble] = useState(false);
   const [caseId] = useState(
     `RR-${Math.floor(1000 + Math.random() * 9000)}-HHS`
